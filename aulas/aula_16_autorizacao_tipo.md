@@ -42,7 +42,7 @@ Essa aula só edita o `seguranca.py` que já existe (não cria arquivo de rota n
 
 ---
 
-## Parte 1 — Fechando a lacuna da Aula 14
+## aParte 1 — Fechando a lacuna da Aula 14
 
 Lembra do aviso na Aula 14: "qualquer pessoa pode se cadastrar e ter acesso total, porque `verificar_token` só confere se o token é válido, não confere o `tipo`"? Chegou a hora de resolver isso.
 
