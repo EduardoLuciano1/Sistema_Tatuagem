@@ -64,7 +64,7 @@ Veja o hash aparecendo no terminal — é esse texto que você vai copiar pra cr
 ![Hash gerado no terminal, pronto para colar no INSERT](imagensexemplos/CriandohashDeAdmin.png)
 
 
-> **Atenção com o `b'suasenha123'`:** o `b` antes das aspas diz ao Python "isso é uma senha, tipo bytes" — é o que o `bcrypt.hashpw` espera. Troque `suasenha123` pela senha que você quiser usar. E não esqueça do `.decode()` no final: sem ele, o resultado vem com `b'...'` ao redor (incluindo essas letras/aspas), o que corrompe o hash se você colar assim no banco.
+> **aAtenção com o `b'suasenha123'`:** o `b` antes das aspas diz ao Python "isso é uma senha, tipo bytes" — é o que o `bcrypt.hashpw` espera. Troque `suasenha123` pela senha que você quiser usar. E não esqueça do `.decode()` no final: sem ele, o resultado vem com `b'...'` ao redor (incluindo essas letras/aspas), o que corrompe o hash se você colar assim no banco.
 
 Copie o texto que apareceu (algo tipo `$2b$12$KIXQ...`) e, no phpMyAdmin, rode:
 
