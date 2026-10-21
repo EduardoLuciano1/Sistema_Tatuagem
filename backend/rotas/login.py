@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 
 import bcrypt
 import jwt
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from database import conectar
@@ -35,11 +35,15 @@ def login(dados: Login):
     conn.close()
 
     if not usuario:
-        return {"erro": "E-mail ou senha inválidos"}
+        raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
 
-    senha_confere = bcrypt.checkpw(dados.senha.encode("utf-8"), usuario["senha"].encode("utf-8"))
+    try:
+        senha_confere = bcrypt.checkpw(dados.senha.encode("utf-8"), usuario["senha"].encode("utf-8"))
+    except (TypeError, ValueError):
+        raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
+
     if not senha_confere:
-        return {"erro": "E-mail ou senha inválidos"}
+        raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
 
     expira_em = datetime.now(timezone.utc) + timedelta(hours=2)
     payload = {

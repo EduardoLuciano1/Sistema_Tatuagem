@@ -9,18 +9,25 @@ formLogin.addEventListener('submit', async (e) => {
     senha: document.getElementById('senha').value
   }
 
-  const resposta = await fetch(`${API}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dados)
-  })
+  try {
+    const resposta = await fetch(`${API}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados)
+    })
 
-  const resultado = await resposta.json()
+    const resultado = await resposta.json()
 
-  if (resposta.ok) {
-    localStorage.setItem('token', resultado.access_token)
-    window.location.href = 'dashboard.html'
-  } else {
-    alert('Erro ao entrar: ' + (resultado.erro || 'Dados inválidos'))
+    if (resposta.ok) {
+      localStorage.setItem('token', resultado.access_token)
+      window.location.href = 'dashboard.html'
+      return
+    }
+
+    const mensagem = resultado.detail || resultado.erro || 'Dados inválidos'
+    alert('Erro ao entrar: ' + mensagem)
+  } catch (erro) {
+    console.error('Erro no login:', erro)
+    alert('Não foi possível conectar com a API. Verifique se o backend está rodando.')
   }
 })

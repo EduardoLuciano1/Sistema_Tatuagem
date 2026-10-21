@@ -8,11 +8,17 @@ function protegerPagina() {
   const token = localStorage.getItem('token')
   if (!token) {
     window.location.href = 'login.html'
+    return
   }
 }
 
 async function fetchAutenticado(url, opcoes = {}) {
   const token = localStorage.getItem('token')
+
+  if (!token) {
+    window.location.href = 'login.html'
+    return Promise.reject(new Error('Token ausente'))
+  }
 
   opcoes.headers = {
     ...opcoes.headers,
