@@ -1,9 +1,3 @@
-// ============================================================
-// js/auth.js — Funções compartilhadas de autenticação
-// Descrição: Usadas por toda tela protegida, pra checar login
-//            e mandar o token em toda requisição pra API.
-// ============================================================
-
 function protegerPagina() {
   const token = localStorage.getItem('token')
   if (!token) {
