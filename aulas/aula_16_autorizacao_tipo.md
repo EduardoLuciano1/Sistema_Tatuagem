@@ -57,7 +57,7 @@ A partir de agora, `POST /usuarios` (cadastro) deixa de ser público — só um 
 Como não existe mais um jeito de se cadastrar pela API sem já ser admin, vamos gerar o hash da senha manualmente, do mesmo jeito que a rota de cadastro faz por baixo dos panos (Aula 12), só que rodando direto no terminal:
 
 ```powershell
-python -c "import bcrypt; print(bcrypt.hashpw(b'suasenha123', bcrypt.gensalt()).decode())"
+python -c "import bcrypt; print(bcrypt.hashpw(b'suasenha123', bcrypt.gensalt()).decode())"python -c "import bcrypt; print(bcrypt.hashpw(b'suasenha123', bcrypt.gensalt()).decode())"
 ```
 Veja o hash aparecendo no terminal — é esse texto que você vai copiar pra criar o usuário no phpMyAdmin:
 
@@ -70,13 +70,13 @@ Copie o texto que apareceu (algo tipo `$2b$12$KIXQ...`) e, no phpMyAdmin, rode:
 
 ```sql
 INSERT INTO usuario (nome, email, senha, tipo)
-VALUES ('Administrador', 'admin@estudio.com', 'COLE_O_HASH_AQUI', 'admin');
+VALUES ('Administrador', 'admin@estudio.com', '$2b$12$G1CGwo1vSqNm7aVk4djabe7VHI1e4y7y6Z0.tfV0Mb3QCBao/JYRO', 'admin');
 ```
 
 **Teste:** faça login (`POST /login`) com `admin@estudio.com` e a senha que você escolheu. Copie o `access_token` e decodifique ele (mesmo comando da Aula 13):
 
 ```powershell
-python -c "import jwt; print(jwt.decode('SEU_TOKEN_AQUI', options={'verify_signature': False}))"
+python -c "import jwt; print(jwt.decode('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBlc3R1ZGlvLmNvbSIsInRpcG8iOiJhZG1pbiIsImV4cCI6MTc5MjYxNzU4N30.GaU7r_RSe7o17P8TQCMJqlOaYoc9xbwGKtmJJgBB2u0', options={'verify_signature': False}))"
 ```
 
 O resultado deve mostrar `'tipo': 'admin'`.
